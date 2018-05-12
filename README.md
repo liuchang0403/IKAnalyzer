@@ -4,7 +4,7 @@ ik-analyzer
 
 maven
 -----
-正在处理...
+
 
 简介
 ---
@@ -20,7 +20,7 @@ IK Analyzer 2012特性:
 
 关于该项目
 =========
-这是官方 [ik-analyzer](https://code.google.com/p/ik-analyzer/) 的一个fork.
+本项目基于官网的项目进行改造，会进行组件的升级以及算法的优化。
 
 LICENSE
 ========
