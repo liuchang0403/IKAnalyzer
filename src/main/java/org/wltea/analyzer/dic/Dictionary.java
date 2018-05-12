@@ -77,9 +77,7 @@ public class Dictionary {
 	 * 只有当Dictionary类被实际调用时，才会开始载入词典，
 	 * 这将延长首次分词操作的时间
 	 * 该方法提供了一个在应用加载阶段就初始化字典的手段
-	 *
 	 * @return Dictionary
-	 * @param cfg a {@link org.wltea.analyzer.cfg.Configuration} object.
 	 */
 	public static Dictionary initial(Configuration cfg){
 		if(singleton == null){
@@ -95,7 +93,6 @@ public class Dictionary {
 	
 	/**
 	 * 获取词典单子实例
-	 *
 	 * @return Dictionary 单例对象
 	 */
 	public static Dictionary getSingleton(){
@@ -107,8 +104,7 @@ public class Dictionary {
 	
 	/**
 	 * 批量加载新词条
-	 *
-	 * @param words Collection&lt;String&gt;词条列表
+	 * @param words Collection<String>词条列表
 	 */
 	public void addWords(Collection<String> words){
 		if(words != null){
@@ -123,8 +119,7 @@ public class Dictionary {
 	
 	/**
 	 * 批量移除（屏蔽）词条
-	 *
-	 * @param words a {@link java.util.Collection} object.
+	 * @param words
 	 */
 	public void disableWords(Collection<String> words){
 		if(words != null){
@@ -139,8 +134,7 @@ public class Dictionary {
 	
 	/**
 	 * 检索匹配主词典
-	 *
-	 * @param charArray an array of char.
+	 * @param charArray
 	 * @return Hit 匹配结果描述
 	 */
 	public Hit matchInMainDict(char[] charArray){
@@ -149,10 +143,9 @@ public class Dictionary {
 	
 	/**
 	 * 检索匹配主词典
-	 *
-	 * @param charArray an array of char.
-	 * @param begin a int.
-	 * @param length a int.
+	 * @param charArray
+	 * @param begin
+	 * @param length
 	 * @return Hit 匹配结果描述
 	 */
 	public Hit matchInMainDict(char[] charArray , int begin, int length){
@@ -161,10 +154,9 @@ public class Dictionary {
 	
 	/**
 	 * 检索匹配量词词典
-	 *
-	 * @param charArray an array of char.
-	 * @param begin a int.
-	 * @param length a int.
+	 * @param charArray
+	 * @param begin
+	 * @param length
 	 * @return Hit 匹配结果描述
 	 */
 	public Hit matchInQuantifierDict(char[] charArray , int begin, int length){
@@ -174,10 +166,9 @@ public class Dictionary {
 	
 	/**
 	 * 从已匹配的Hit中直接取出DictSegment，继续向下匹配
-	 *
-	 * @param charArray an array of char.
-	 * @param currentIndex a int.
-	 * @param matchedHit a {@link org.wltea.analyzer.dic.Hit} object.
+	 * @param charArray
+	 * @param currentIndex
+	 * @param matchedHit
 	 * @return Hit
 	 */
 	public Hit matchWithHit(char[] charArray , int currentIndex , Hit matchedHit){
@@ -188,10 +179,9 @@ public class Dictionary {
 	
 	/**
 	 * 判断是否是停止词
-	 *
-	 * @param charArray an array of char.
-	 * @param begin a int.
-	 * @param length a int.
+	 * @param charArray
+	 * @param begin
+	 * @param length
 	 * @return boolean
 	 */
 	public boolean isStopWord(char[] charArray , int begin, int length){			

@@ -30,27 +30,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.util.Version;
 import org.wltea.analyzer.core.IKSegmenter;
 import org.wltea.analyzer.core.Lexeme;
 
 /**
  * Single Word Multi Char Query Builder
  * IK分词算法专用
- *
  * @author linliangyi
+ *
  */
 public class SWMCQueryBuilder {
 
 	/**
 	 * 生成SWMCQuery
-	 *
-	 * @param fieldName a {@link java.lang.String} object.
-	 * @param keywords a {@link java.lang.String} object.
-	 * @param quickMode a boolean.
+	 * @param fieldName
+	 * @param keywords
+	 * @param quickMode
 	 * @return Lucene Query
 	 */
 	public static Query create(String fieldName ,String keywords , boolean quickMode){
@@ -125,7 +123,7 @@ public class SWMCQueryBuilder {
 		}
 
 		//借助lucene queryparser 生成SWMC Query
-		QueryParser qp = new QueryParser(Version.LUCENE_34, fieldName, new StandardAnalyzer(Version.LUCENE_34));
+		QueryParser qp = new QueryParser( fieldName, new StandardAnalyzer());
 		qp.setDefaultOperator(QueryParser.AND_OPERATOR);
 		qp.setAutoGeneratePhraseQueries(true);
 		

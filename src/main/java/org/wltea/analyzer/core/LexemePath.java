@@ -194,12 +194,6 @@ class LexemePath extends QuickSortSet implements Comparable<LexemePath>{
 		return theCopy;
 	}
 
-	/**
-	 * <p>compareTo.</p>
-	 *
-	 * @return a int.
-	 * @param o a {@link org.wltea.analyzer.core.LexemePath} object.
-	 */
 	public int compareTo(LexemePath o) {
 		//比较有效文本长度
 		if(this.payloadLength > o.payloadLength){
@@ -246,11 +240,6 @@ class LexemePath extends QuickSortSet implements Comparable<LexemePath>{
 		return 0;
 	}
 	
-	/**
-	 * <p>toString.</p>
-	 *
-	 * @return a {@link java.lang.String} object.
-	 */
 	public String toString(){
 		StringBuffer sb = new StringBuffer();
 		sb.append("pathBegin  : ").append(pathBegin).append("\r\n");

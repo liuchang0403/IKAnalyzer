@@ -34,6 +34,7 @@ import org.wltea.analyzer.dic.Dictionary;
 
 /**
  * IK分词器主类
+ *
  */
 public final class IKSegmenter {
 	
@@ -51,10 +52,9 @@ public final class IKSegmenter {
 
 	/**
 	 * IK分词器构造函数
-	 *
-	 * @param input a {@link java.io.Reader} object.
+	 * @param input 
 	 * @param useSmart 为true，使用智能分词策略
-	 *
+	 * 
 	 * 非智能分词：细粒度输出所有可能的切分结果
 	 * 智能分词： 合并数词和量词，对分词结果进行歧义判断
 	 */
@@ -67,9 +67,9 @@ public final class IKSegmenter {
 	
 	/**
 	 * IK分词器构造函数
-	 *
-	 * @param input a {@link java.io.Reader} object.
+	 * @param input
 	 * @param cfg 使用自定义的Configuration构造分词器
+	 * 
 	 */
 	public IKSegmenter(Reader input , Configuration cfg){
 		this.input = input;
@@ -108,17 +108,15 @@ public final class IKSegmenter {
 	
 	/**
 	 * 分词，获取下一个词元
-	 *
 	 * @return Lexeme 词元对象
-	 * @throws java.io.IOException if any.
+	 * @throws IOException
 	 */
 	public synchronized Lexeme next()throws IOException{
 		Lexeme l = null;
-		
-		while((l = context.getNextLexeme()) == null){
+		while((l = context.getNextLexeme()) == null ){
 			/*
 			 * 从reader中读取数据，填充buffer
-			 * 如果reader是分次读入buffer的，那么buffer要进行移位处理
+			 * 如果reader是分次读入buffer的，那么buffer要  进行移位处理
 			 * 移位处理上次读入的但未处理的数据
 			 */
 			int available = context.fillBuffer(this.input);
@@ -148,19 +146,18 @@ public final class IKSegmenter {
 			}
 			//对分词进行歧义处理
 			this.arbitrator.process(context, this.cfg.useSmart());			
-			//处理未切分CJK字符
+			//将分词结果输出到结果集，并处理未切分的单个CJK字符
 			context.outputToResult();
 			//记录本次分词的缓冲区位移
 			context.markBufferOffset();			
 		}
-		
 		return l;
-	}	
+	}
+
 	/**
-	 * 重置分词器到初始状态
-	 *
-	 * @param input a {@link java.io.Reader} object.
-	 */
+     * 重置分词器到初始状态
+     * @param input
+     */
 	public synchronized void reset(Reader input) {
 		this.input = input;
 		context.reset();

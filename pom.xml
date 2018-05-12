@@ -2,21 +2,16 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
          xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.wltea.analyzer</groupId>
     <artifactId>IKAnalyzer</artifactId>
-    <version>2012_u6</version>
+    <version>2018.05</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.6</java.version>
-        <lucene.version>3.4.0</lucene.version>
-        <junit.version>4.11</junit.version>
+        <java.version>1.8</java.version>
+        <lucene.version>6.6.3</lucene.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <name>IK Lucene Chinese Analyzer</name>

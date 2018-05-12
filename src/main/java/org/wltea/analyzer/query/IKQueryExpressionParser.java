@@ -32,21 +32,21 @@ import java.util.Stack;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.BooleanQuery.Builder;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.util.BytesRef;
 
 /**
- * IK简易查询表达式解析
+ * IK简易查询表达式解析 
  * 结合SWMCQuery算法
- *
+ * 
  * 表达式例子 ：
- * <pre>
- *     (id='1231231' &amp;&amp; title:'monkey') || (content:'你好吗'  || ulr='www.ik.com') - name:'helloword'
- * </pre>
- *
+ * (id='1231231' && title:'monkey') || (content:'你好吗'  || ulr='www.ik.com') - name:'helloword'
  * @author linliangyi
+ *
  */
 public class IKQueryExpressionParser {
 	
@@ -60,9 +60,9 @@ public class IKQueryExpressionParser {
 	
 	/**
 	 * 解析查询表达式，生成Lucene Query对象
-	 *
-	 * @param expression a {@link java.lang.String} object.
-	 * @param quickMode a boolean.
+	 * 
+	 * @param expression
+	 * @param quickMode 
 	 * @return Lucene query
 	 */
 	public Query parseExp(String expression , boolean quickMode){
@@ -466,8 +466,10 @@ public class IKQueryExpressionParser {
 			return null;
 		}
 		
-		BooleanQuery resultQuery = new BooleanQuery();
-
+//		BooleanQuery resultQuery = new BooleanQuery.Builder().build();
+		
+		Builder builder = new BooleanQuery.Builder();
+		
 		if(this.querys.size() == 1){
 			return this.querys.get(0);
 		}
@@ -477,14 +479,15 @@ public class IKQueryExpressionParser {
 		if('&' == op.type){
 			if(q1 != null){
 				if(q1 instanceof BooleanQuery){
-					BooleanClause[] clauses = ((BooleanQuery)q1).getClauses();
-					if(clauses.length > 0 
-							&& clauses[0].getOccur() == Occur.MUST){
+					List<BooleanClause> clauses = ((BooleanQuery) q1).clauses();//((BooleanQuery)q1).getClauses();
+					if(clauses.size() > 0 
+							&& clauses.get(0).getOccur() == Occur.MUST){
 						for(BooleanClause c : clauses){
-							resultQuery.add(c);
+							
+							builder.add(c);
 						}					
 					}else{
-						resultQuery.add(q1,Occur.MUST);
+						builder.add(q1,Occur.MUST);
 					}
 
 				}else{
@@ -492,20 +495,20 @@ public class IKQueryExpressionParser {
 					//q1 instanceof TermRangeQuery 
 					//q1 instanceof PhraseQuery
 					//others
-					resultQuery.add(q1,Occur.MUST);
+					builder.add(q1,Occur.MUST);
 				}
 			}
 			
 			if(q2 != null){
 				if(q2 instanceof BooleanQuery){
-					BooleanClause[] clauses = ((BooleanQuery)q2).getClauses();
-					if(clauses.length > 0 
-							&& clauses[0].getOccur() == Occur.MUST){
+					List<BooleanClause> clauses = ((BooleanQuery)q2).clauses();
+					if(clauses.size() > 0 
+							&& clauses.get(0).getOccur() == Occur.MUST){
 						for(BooleanClause c : clauses){
-							resultQuery.add(c);
+							builder.add(c);
 						}					
 					}else{
-						resultQuery.add(q2,Occur.MUST);
+						builder.add(q2,Occur.MUST);
 					}
 					
 				}else{
@@ -513,21 +516,21 @@ public class IKQueryExpressionParser {
 					//q1 instanceof TermRangeQuery 
 					//q1 instanceof PhraseQuery
 					//others
-					resultQuery.add(q2,Occur.MUST);
+					builder.add(q2,Occur.MUST);
 				}
 			}
 			
 		}else if('|' == op.type){
 			if(q1 != null){
 				if(q1 instanceof BooleanQuery){
-					BooleanClause[] clauses = ((BooleanQuery)q1).getClauses();
-					if(clauses.length > 0 
-							&& clauses[0].getOccur() == Occur.SHOULD){
+					List<BooleanClause> clauses = ((BooleanQuery)q1).clauses();
+					if(clauses.size() > 0 
+							&& clauses.get(0).getOccur() == Occur.SHOULD){
 						for(BooleanClause c : clauses){
-							resultQuery.add(c);
+							builder.add(c);
 						}					
 					}else{
-						resultQuery.add(q1,Occur.SHOULD);
+						builder.add(q1,Occur.SHOULD);
 					}
 					
 				}else{
@@ -535,27 +538,27 @@ public class IKQueryExpressionParser {
 					//q1 instanceof TermRangeQuery 
 					//q1 instanceof PhraseQuery
 					//others
-					resultQuery.add(q1,Occur.SHOULD);
+					builder.add(q1,Occur.SHOULD);
 				}
 			}
 			
 			if(q2 != null){
 				if(q2 instanceof BooleanQuery){
-					BooleanClause[] clauses = ((BooleanQuery)q2).getClauses();
-					if(clauses.length > 0 
-							&& clauses[0].getOccur() == Occur.SHOULD){
+					List<BooleanClause> clauses = ((BooleanQuery)q2).clauses();
+					if(clauses.size() > 0 
+							&& clauses.get(0).getOccur() == Occur.SHOULD){
 						for(BooleanClause c : clauses){
-							resultQuery.add(c);
+							builder.add(c);
 						}					
 					}else{
-						resultQuery.add(q2,Occur.SHOULD);
+						builder.add(q2,Occur.SHOULD);
 					}
 				}else{
 					//q2 instanceof TermQuery 
 					//q2 instanceof TermRangeQuery 
 					//q2 instanceof PhraseQuery
 					//others
-					resultQuery.add(q2,Occur.SHOULD);
+					builder.add(q2,Occur.SHOULD);
 					
 				}
 			}
@@ -566,13 +569,13 @@ public class IKQueryExpressionParser {
 			}
 			
 			if(q1 instanceof BooleanQuery){
-				BooleanClause[] clauses = ((BooleanQuery)q1).getClauses();
-				if(clauses.length > 0){
+				List<BooleanClause> clauses = ((BooleanQuery)q1).clauses();
+				if(clauses.size() > 0){
 					for(BooleanClause c : clauses){
-						resultQuery.add(c);
+						builder.add(c);
 					}					
 				}else{
-					resultQuery.add(q1,Occur.MUST);
+					builder.add(q1,Occur.MUST);
 				}
 
 			}else{
@@ -580,11 +583,14 @@ public class IKQueryExpressionParser {
 				//q1 instanceof TermRangeQuery 
 				//q1 instanceof PhraseQuery
 				//others
-				resultQuery.add(q1,Occur.MUST);
-			}				
+				builder.add(q1,Occur.MUST);
+			}
 			
-			resultQuery.add(q2,Occur.MUST_NOT);
+			builder.add(q2,Occur.MUST_NOT);
 		}
+		
+		BooleanQuery resultQuery = builder.build();
+		
 		return resultQuery;
 	}	
 	
@@ -650,7 +656,7 @@ public class IKQueryExpressionParser {
 			throw new IllegalStateException("表达式异常, RangeQuery格式错误");
 		}
 		
-		return new TermRangeQuery(fieldNameEle.toString() , firstValue , lastValue , includeFirst , includeLast);
+		return new TermRangeQuery(fieldNameEle.toString() , new BytesRef(firstValue) , new BytesRef(lastValue) , includeFirst , includeLast);
 	}	
 	
 	/**
@@ -705,11 +711,6 @@ public class IKQueryExpressionParser {
 		}
 	}	
 
-	/**
-	 * <p>main.</p>
-	 *
-	 * @param args an array of {@link java.lang.String} objects.
-	 */
 	public static void main(String[] args){
 		IKQueryExpressionParser parser = new IKQueryExpressionParser();
 		//String ikQueryExp = "newsTitle:'的两款《魔兽世界》插件Bigfoot和月光宝盒'";

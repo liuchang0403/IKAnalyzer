@@ -77,11 +77,6 @@ class AnalyzeContext {
 	//分词器配置项
 	private Configuration cfg;
     
-    /**
-     * <p>Constructor for AnalyzeContext.</p>
-     *
-     * @param cfg a {@link org.wltea.analyzer.cfg.Configuration} object.
-     */
     public AnalyzeContext(Configuration cfg){
     	this.cfg = cfg;
     	this.segmentBuff = new char[BUFF_SIZE];
@@ -257,12 +252,15 @@ class AnalyzeContext {
 	}
 	
 	/**
-	 * 处理未知类型的CJK字符
+	 * 推送分词结果到结果集合
+	 * 1.从buff头部遍历到this.cursor已处理位置
+	 * 2.将map中存在的分词结果推入results
+	 * 3.将map中不存在的CJDK字符以单字方式推入results
 	 */
 	void outputToResult(){
 		int index = 0;
 		for( ; index <= this.cursor ;){
-			//跳过标点符号等字符
+			//跳过非CJK字符
 			if(CharacterUtil.CHAR_USELESS == this.charTypes[index]){
 				index++;
 				continue;
@@ -307,7 +305,7 @@ class AnalyzeContext {
 			this.results.add(singleCharLexeme);
 		}
 	}
-
+		
 	/**
 	 * 返回lexeme 
 	 * 

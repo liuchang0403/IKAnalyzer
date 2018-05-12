@@ -87,14 +87,13 @@ class LetterSegmenter implements ISegmenter {
 	/* (non-Javadoc)
 	 * @see org.wltea.analyzer.core.ISegmenter#analyze(org.wltea.analyzer.core.AnalyzeContext)
 	 */
-	/** {@inheritDoc} */
 	public void analyze(AnalyzeContext context) {
 		boolean bufferLockFlag = false;
 		//处理英文字母
 		bufferLockFlag = this.processEnglishLetter(context) || bufferLockFlag;
 		//处理阿拉伯字母
 		bufferLockFlag = this.processArabicLetter(context) || bufferLockFlag;
-		//处理混合字母
+		//处理混合字母(这个要放最后处理，可以通过QuickSortSet排除重复)
 		bufferLockFlag = this.processMixLetter(context) || bufferLockFlag;
 		
 		//判断是否锁定缓冲区
@@ -108,9 +107,6 @@ class LetterSegmenter implements ISegmenter {
 	
 	/* (non-Javadoc)
 	 * @see org.wltea.analyzer.core.ISegmenter#reset()
-	 */
-	/**
-	 * <p>reset.</p>
 	 */
 	public void reset() {
 		this.start = -1;

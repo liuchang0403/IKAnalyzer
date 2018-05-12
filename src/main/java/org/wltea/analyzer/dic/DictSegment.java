@@ -319,8 +319,7 @@ class DictSegment implements Comparable<DictSegment>{
 
 	/**
 	 * 实现Comparable接口
-	 *
-	 * @param o a {@link org.wltea.analyzer.dic.DictSegment} object.
+	 * @param o
 	 * @return int
 	 */
 	public int compareTo(DictSegment o) {
