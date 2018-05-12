@@ -15,36 +15,9 @@
     </properties>
 
     <name>IK Lucene Chinese Analyzer</name>
-    <description>这个是官方 ik 分词器的一个fork, 原项目地址为 https://code.google.com/p/ik-analyzer/</description>
-    <url>https://github.com/wenerme/IKAnalyzer</url>
-
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <scm>
-        <url>git@github.com:wenerme/IKAnalyzer.git</url>
-        <connection>scm:git:git@github.com:wenerme/IKAnalyzer.git</connection>
-        <developerConnection>scm:git:git@github.com:wenerme/IKAnalyzer.git</developerConnection>
-    </scm>
-
-    <developers>
-        <developer>
-            <id>linliangyi2007</id>
-            <url>http://linliangyi2007.iteye.com/blog/1703916</url>
-        </developer>
-        <developer>
-            <id>wener</id>
-            <url>http://wener.me</url>
-        </developer>
-    </developers>
+    <description>中英文分词神器</description>
 
     <dependencies>
-
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
@@ -65,7 +38,6 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
